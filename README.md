@@ -27,10 +27,10 @@ This script was created based on instructions posted in a StackExchange post
 ## Installation
 
 1. **Download the Script:**
-   Clone this repository or download the script file directly from the [GitHub repository](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME).
+   Clone this repository or download the script file directly from the [GitHub repository](https://github.com/Raasu2/macOS-BootableUSB-Builder).
 
    ```bash
-   git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME.git
+   git clone https://github.com/Raasu2/macOS-BootableUSB-Builder.git
 2. **Follow the Prompts:**
    - Enter the full path to the InstallMacOSX.pkg file when prompted.
    - Enter the volume name of your USB drive (e.g., KEY).
@@ -58,7 +58,7 @@ The script automatically handles cleanup of temporary files and directories, ens
 - Make sure your USB drive is properly formatted and mounted.
 - Check that you have sufficient administrative privileges to execute the script.
 
-If you encounter issues, refer to the [GitHub Issues page](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/issues) or the [Stack Exchange post](https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac) for potential solutions.
+If you encounter issues, refer to the [GitHub Issues page](https://github.com/Raasu2/macOS-BootableUSB-Builder/issues) or the [Stack Exchange post](https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac) for potential solutions.
 
 ## Contributing
 
