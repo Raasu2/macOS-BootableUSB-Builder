@@ -1,79 +1,118 @@
-# macOS USB Installer Script
+# Create bootable legacy macOS USB installers on Apple Silicon
 
-This script enables you to create a bootable USB installer for older versions of macOS using full installer files downloaded from Apple's website. It is especially useful for preparing bootable drives for macOS versions that are challenging to set up on newer hardware.
+## What this is
 
-## Introduction
+If you’re using a **new Apple Silicon Mac (M1 / M2 / M3)** and need to install macOS on an **older Intel Mac**, Apple makes this surprisingly difficult — sometimes impossible — using official tools.
 
-Creating a bootable macOS USB installer for older versions like macOS Yosemite (10.10) can be challenging on newer Macs. This script simplifies the process by automating the creation of a bootable USB installer using the `.pkg` file downloaded from Apple's support page.
+Older macOS versions are distributed as **`.pkg` installers**, but:
 
-This script was created based on instructions posted in a StackExchange post
+- They don’t produce a bootable USB on modern Macs
+- `createinstallmedia` often fails or isn’t accessible
+- The installer app can’t be launched on Apple Silicon
 
+This script exists to solve **that exact problem**.
 
-**Original post:** [Create an El Capitan rescue USB using a modern M1 Mac](https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac)
+It takes an **official macOS installer `.pkg`**, extracts it correctly, and creates a **bootable USB installer that works on Intel Macs**, even when created on Apple Silicon.
 
-## Features
+---
 
-- Create bootable macOS USB installers for various macOS versions.
-- Works on newer Macs with Apple Silicon or Intel processors.
-- Automates the entire process from extracting the installer to preparing the USB drive.
+## When you need this
 
-## Prerequisites
+Use this script if:
 
-- macOS with access to the Terminal.
-- The `.pkg` file of the macOS installer you wish to use. This can be downloaded from Apple's [support page](https://support.apple.com/en-gb/102662) or other trusted sources.
-- A USB drive with at least 8 GB of space.
-- Administrative privileges to execute some commands.
+- You only have access to a **modern Apple Silicon Mac**
+- You need to reinstall macOS on an **older Intel Mac**
+- Internet Recovery doesn’t work or isn’t available
+- The macOS installer you downloaded is a **`.pkg`, not an app**
 
-## Installation
+---
 
-1. **Download the Script:**
-   Clone this repository or download the script file directly from the [GitHub repository](https://github.com/Raasu2/macOS-BootableUSB-Builder).
+## What it does
 
-   ```bash
-   git clone https://github.com/Raasu2/macOS-BootableUSB-Builder.git
-2. **Follow the Prompts:**
-   - Enter the full path to the InstallMacOSX.pkg file when prompted.
-   - Enter the volume name of your USB drive (e.g., KEY).
-   
+The script automates a process that normally requires undocumented manual steps:
+
+1. Extracts the hidden **Install macOS.app** from Apple’s `.pkg`
+2. Mounts the required disk images
+3. Runs Apple’s own `createinstallmedia` in a way that still works on modern macOS
+4. Produces a **properly bootable USB installer for Intel Macs**
+
+---
+
+## Requirements
+
+- macOS (Apple Silicon or Intel)
+- USB drive (8 GB minimum, 16 GB recommended)
+- Official macOS installer `.pkg`
+- Administrator (sudo) access
+
+Legacy macOS installers can be downloaded from Apple:  
+https://support.apple.com/102662
+
+---
+
 ## Usage
 
-1. **Run the Script:**
+### 1. Clone the repository
 
-   ```bash
-   ./create_bootable_installer.sh
+```bash
+git clone https://github.com/Raasu2/macOS-BootableUSB-Builder.git
+cd macOS-BootableUSB-Builder
+```
 
-2. **Follow the Prompts:**
-  - Enter the full path to the InstallMacOSX.pkg file when prompted.
-  - Enter the volume name of your USB drive (e.g., KEY).
+### 2. Make the script executable
 
-The script will handle the rest, including formatting the USB drive, copying necessary files, and cleaning up temporary files.
+```bash
+chmod +x create_bootable_installer.sh
+```
 
-## Cleanup
+### 3. Insert your USB drive
 
-The script automatically handles cleanup of temporary files and directories, ensuring no residual files are left behind.
+Note the **volume name** (example: `InstallUSB`).
 
-## Troubleshooting
+⚠️ **All data on this drive will be erased.**
 
-- Ensure that the path to the `.pkg` file is correct and accessible.
-- Make sure your USB drive is properly formatted and mounted.
-- Check that you have sufficient administrative privileges to execute the script.
+### 4. Run the script
 
-If you encounter issues, refer to the [GitHub Issues page](https://github.com/Raasu2/macOS-BootableUSB-Builder/issues) or the [Stack Exchange post](https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac) for potential solutions.
+```bash
+./create_bootable_installer.sh
+```
 
-## Contributing
+### 5. Follow the prompts
 
-Feel free to fork the repository and submit pull requests if you have improvements or fixes. Contributions are welcome!
+You’ll be asked for:
+
+- The full path to the macOS installer `.pkg`
+- The USB volume name
+
+The script handles the rest.
+
+---
+
+## Booting the Intel Mac
+
+1. Insert the USB into the Intel Mac
+2. Power on and hold **Option (⌥)**
+3. Select the installer and proceed normally
+
+---
+
+## Notes & safety
+
+- The script only erases the USB volume you specify
+- Temporary files are cleaned up automatically
+- Double-check the USB name before confirming
+
+---
+
+## Background
+
+This script is based on real recovery steps discussed here:  
+https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac
+
+The manual method works — this script makes it repeatable and less error-prone.
+
+---
 
 ## License
 
-This script is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Acknowledgments
-
-This script was inspired by a solution shared on Stack Exchange. Special thanks to the original contributors for their valuable input:
-
-- **Original Stack Exchange Post**: [Create an El Capitan Rescue USB Using a Modern M1 Mac](https://apple.stackexchange.com/questions/418100/create-an-el-capitan-rescue-usb-using-a-modern-m1-mac)
-- **Author**: [nohillside](https://apple.stackexchange.com/users/415185)
-
-The approach outlined in the post was instrumental in developing this script, which has been adapted to support creating bootable installers for macOS from full installer files.
-
+MIT License
